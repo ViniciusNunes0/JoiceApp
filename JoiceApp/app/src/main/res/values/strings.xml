@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">JoiceApp</string>
+    <string-array name="usuario">
+        <item>Selecione o login</item>
+        <item>Cuidador</item>
+        <item>Cliente</item>
+    </string-array>
+
+</resources>
