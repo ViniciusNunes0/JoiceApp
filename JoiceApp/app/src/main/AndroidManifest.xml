@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CadastrarUsuarioActivity"></activity>
+        <activity android:name=".CadastrarUsuarioActivity" />
+        <activity android:name=".listarUsuarioActivity"></activity>
     </application>
 
 </manifest>

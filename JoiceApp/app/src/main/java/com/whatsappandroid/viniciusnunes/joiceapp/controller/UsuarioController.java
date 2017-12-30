@@ -2,11 +2,15 @@ package com.whatsappandroid.viniciusnunes.joiceapp.controller;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.whatsappandroid.viniciusnunes.joiceapp.DAO.DatabaseAdapter;
 import com.whatsappandroid.viniciusnunes.joiceapp.Model.Usuario;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Vinicius Nunes on 18/12/2017.
@@ -41,34 +45,119 @@ public class UsuarioController extends DatabaseAdapter {
         return cadatrado;
     }
 
-    public boolean AlterarUsuario(Usuario usuario,Context context) {
-        return true;
-    }
+    public List<Usuario> listarUsuario(){
 
-    public boolean ExcluirUsuario(int id, Context context){
+        List<Usuario> usuarios = new ArrayList<>();
 
-        return true;
+        String sql = "SELECT * FROM  usuario ORDER BY id DESC";
 
-    }
-
-    public boolean ListarUsuarioNome(Usuario usuario, Context context){
-
-        String sql = "SELECT * FROM usuario WHERE nome ='"+usuario.getNome()+"'";
         SQLiteDatabase db = this.getReadableDatabase();
-        db.execSQL(sql);
 
-        return true;
+        Cursor cursor = db.rawQuery(sql, null);
+        if(cursor.moveToFirst()){
+            do{
 
+                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
+                String nome = cursor.getString(cursor.getColumnIndex("nome"));
+                String telefone = cursor.getString(cursor.getColumnIndex("telefone"));
+                String tipoLogin = cursor.getString(cursor.getColumnIndex("tipoLogin"));
+
+                Usuario usuario = new Usuario();
+                usuario.setId(id);
+                usuario.setTelefone(telefone);
+                usuario.setNome(nome);
+                usuario.setTipoLogin(tipoLogin);
+
+                usuarios.add(usuario);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return usuarios;
     }
 
-    public boolean ListarUsuarioTelefone(Usuario usuario, Context context){
+    public boolean ValidarLogin(Usuario usuario, Context context){
 
-        String sql = "SELECT * FROM usuario WHERE telefone ='"+usuario.getTelefone()+"'";
+        boolean logado = false;
+
+        String senha="";
+        String login="";
+        String tipoLogin="";
+
+        try {
+
+            String sql = "SELECT * FROM  usuario where telefone =" + usuario.getTelefone()+"";
+
+            SQLiteDatabase db = this.getReadableDatabase();
+
+            Cursor cursor = db.rawQuery(sql, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    login = cursor.getString(cursor.getColumnIndex("telefone"));
+                    senha = cursor.getString(cursor.getColumnIndex("senha"));
+                    tipoLogin = cursor.getString(cursor.getColumnIndex("tipoLogin"));
+
+                } while (cursor.moveToNext());
+            }
+
+            if (usuario.getTelefone().equals(login) && usuario.getSenha().equals(senha) && usuario.getTipoLogin().equals(tipoLogin)){
+                Toast.makeText(context, "Login Realizado com Sucesso", Toast.LENGTH_LONG).show();
+                logado = true;
+            }
+            else {
+                Toast.makeText(context, "Usuario invalido", Toast.LENGTH_LONG).show();
+            }
+
+            cursor.close();
+            db.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return logado;
+    }
+
+    public List<Usuario> Pesquisar(String usuarioLogin){
+
+        List<Usuario> usuarios = new ArrayList<>();
+
+        String sql = "SELECT * FROM  usuario where telefone ="+usuarioLogin+"";
+
         SQLiteDatabase db = this.getReadableDatabase();
-        db.execSQL(sql);
 
-        return true;
+        Cursor cursor = db.rawQuery(sql, null);
 
+        if(cursor.moveToFirst()){
+            do{
+
+                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
+                String nome = cursor.getString(cursor.getColumnIndex("nome"));
+                String telefone = cursor.getString(cursor.getColumnIndex("telefone"));
+                String tipoLogin = cursor.getString(cursor.getColumnIndex("tipoLogin"));
+
+                Usuario usuario = new Usuario();
+                usuario.setId(id);
+                usuario.setTelefone(telefone);
+                usuario.setNome(nome);
+                usuario.setTipoLogin(tipoLogin);
+
+                usuarios.add(usuario);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return usuarios;
     }
+
+
+
 
 }

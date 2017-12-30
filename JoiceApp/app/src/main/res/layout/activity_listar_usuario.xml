@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.whatsappandroid.viniciusnunes.joiceapp.listarUsuarioActivity">
+
+    <EditText
+        android:id="@+id/pesquisarID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="19dp"
+        android:layout_toLeftOf="@+id/btnPesquisarID"
+        android:layout_toStartOf="@+id/btnPesquisarID"
+        android:ems="10"
+        android:hint="pesquidar telefone"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/btnPesquisarID"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnPesquisarID"
+        android:layout_width="107dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/pesquisarID"
+        android:layout_alignBottom="@+id/pesquisarID"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"
+        android:text="Pesquisar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pesquisarID"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnPesquisarID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/objetoContatos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

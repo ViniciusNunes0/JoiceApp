@@ -45,21 +45,29 @@ public class MainActivity extends AppCompatActivity {
                 if(posicao == 0){
                     Toast.makeText(MainActivity.this,"Selecione o tipo de login",Toast.LENGTH_LONG).show();
                 }
+                else if(login.getText().toString().isEmpty() || senha.getText().toString().isEmpty()){
+                    Toast.makeText(getApplication(), "Preencha os campos vazios", Toast.LENGTH_LONG).show();
+                }
                 else {
+
                     Usuario usuario = new Usuario();
                     usuario.setTelefone(login.getText().toString());
                     usuario.setSenha(senha.getText().toString());
-                    //usuario.setTipoLogin(posicao);
-                    usuario.setNome("nunes");
+                    String valor = (posicao==1)?"Cuidador":"Cliente";
+                    usuario.setTipoLogin(valor);
 
                     UsuarioController usuarioController = new UsuarioController(getApplicationContext());
-                    usuarioController.CadastrarUsuario(usuario, MainActivity.this);
+                    if(usuarioController.ValidarLogin(usuario,MainActivity.this)){
+                        if(posicao==1){
+                            //abre tela do Cuidador...
+                        }
+                        else{
+                            // abre tela do Cliente...
+                        }
+                    }
 
-                    Log.i("db", usuario.getTelefone());
-                    Log.i("db", usuario.getSenha());
-                    Log.i("db", String.valueOf(posicao));
-                    Log.i("db", String.valueOf(usuario.getId()));
                 }
+
 
             }
 
@@ -71,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        TextView texto = findViewById(R.id.textView9);
 
     }
 

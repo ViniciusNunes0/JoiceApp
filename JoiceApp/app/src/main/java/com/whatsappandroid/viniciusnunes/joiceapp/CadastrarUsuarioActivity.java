@@ -24,6 +24,7 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
     private EditText senha;
     private Button botaoSalvar;
     private Button botaoVoltar;
+    private Button botaoListar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
         senha = findViewById(R.id.editSenhaC);
         botaoSalvar = findViewById(R.id.btnCadastar);
         botaoVoltar = findViewById(R.id.btnVoltar);
+        botaoListar = findViewById(R.id.btnListar);
 
         tipoLoginSpinner();
 
@@ -46,7 +48,11 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
 
                 if (posicao == 0) {
                     Toast.makeText(getApplication(), "Selecione o tipo de login", Toast.LENGTH_LONG).show();
-                } else {
+                }
+                else if(nome.getText().toString().isEmpty() || telefone.getText().toString().isEmpty() || senha.getText().toString().isEmpty()){
+                    Toast.makeText(getApplication(), "Preencha os campos vazios", Toast.LENGTH_LONG).show();
+                }
+                else {
                     Usuario usuario = new Usuario();
                     usuario.setTelefone(telefone.getText().toString());
                     usuario.setSenha(senha.getText().toString());
@@ -56,11 +62,6 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
 
                     UsuarioController usuarioController = new UsuarioController(getApplicationContext());
                     usuarioController.CadastrarUsuario(usuario, getApplication());
-
-                    Log.i("db", usuario.getTelefone());
-                    Log.i("db", usuario.getSenha());
-                    Log.i("db", usuario.getNome());
-                    Log.i("db", valor);
                 }
 
             }
@@ -70,7 +71,16 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
         botaoVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        botaoListar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), listarUsuarioActivity.class);
+                startActivity(intent);
             }
         });
 
